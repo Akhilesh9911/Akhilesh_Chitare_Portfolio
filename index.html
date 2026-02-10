@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akhilesh Chitare | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'glass': 'rgba(255, 255, 255, 0.1)',
+                        'glass-border': 'rgba(255, 255, 255, 0.2)',
+                        'primary': '#6366f1',
+                        'secondary': '#8b5cf6',
+                        'accent': '#ec4899',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Navbar Glass */
+        .nav-glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Skill Tags */
+        .skill-tag {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
+            border: 1px solid rgba(99, 102, 241, 0.5);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(139, 92, 246, 0.5));
+            transform: scale(1.05);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Section Reveal Animation */
+        .reveal {
+           opacity: 0;
+  transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+        @media (max-width: 640px) {
+  .reveal {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating Orbs */
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: orb-float 15s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(99, 102, 241, 0.3);
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: rgba(236, 72, 153, 0.2);
+            bottom: 20%;
+            left: 5%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(139, 92, 246, 0.25);
+            top: 50%;
+            right: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(20px, -30px) scale(1.1); }
+            50% { transform: translate(-20px, 20px) scale(0.9); }
+            75% { transform: translate(30px, 10px) scale(1.05); }
+        }
+
+        /* Project Cards */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: linear-gradient(to bottom, #6366f1, transparent);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
+        }
+
+        /* Social Icons */
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Contact Info */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 10px;
+        }
+
+        /* Hero Image */
+        .hero-image-container {
+            position: relative;
+        }
+
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            border-radius: 50%;
+            z-index: -1;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Stats */
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-links.active {
+    display: flex;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    background: transparent;
+    padding: 0;
+  }
+}
+        }
+        body {
+  overflow-x: hidden;
+}
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+   <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      
+      <!-- Logo -->
+      <a href="#" class="text-2xl font-bold gradient-text">AC</a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="hover:text-purple-400">About</a>
+        <a href="#skills" class="hover:text-purple-400">Skills</a>
+        <a href="#projects" class="hover:text-purple-400">Projects</a>
+        <a href="#experience" class="hover:text-purple-400">Experience</a>
+        <a href="#education" class="hover:text-purple-400">Education</a>
+        <a href="#contact" class="hover:text-purple-400">Contact</a>
+      </div>
+
+      <!-- Hamburger Button -->
+      <button class="md:hidden text-2xl" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-[#0f172a]/95 backdrop-blur-xl">
+    <div class="flex flex-col items-center gap-6 py-8">
+      <a href="#about" onclick="closeMenu()">About</a>
+      <a href="#skills" onclick="closeMenu()">Skills</a>
+      <a href="#projects" onclick="closeMenu()">Projects</a>
+      <a href="#experience" onclick="closeMenu()">Experience</a>
+      <a href="#education" onclick="closeMenu()">Education</a>
+      <a href="#contact" onclick="closeMenu()">Contact</a>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center pt-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="order-2 lg:order-1 reveal">
+                    <p class="text-purple-400 mb-4 text-lg font-medium">Hello, I'm</p>
+<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
+                        <span class="gradient-text">Akhilesh</span>
+                        <span class="text-white">Chitare</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-300 mb-6">
+                        Computer Science Engineering Student
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-8 max-w-xl">
+                        Passionate about backend and full-stack development with a strong foundation in Java, data structures, and software development. Currently seeking internship and entry-level opportunities.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="btn-primary">
+                            <i class="fas fa-paper-plane mr-2"></i>Get In Touch
+                        </a>
+                        <a href="assets/Akhilesh_Chitare_Resume (2).pdf" download class="btn-outline">
+                            <i class="fas fa-download mr-2"></i>Download Resume
+                        </a>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="flex gap-4 mt-8">
+                        <a href="https://linkedin.com/in/akhilesh00" target="_blank" class="social-icon" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/Akhilesh9911" target="_blank" class="social-icon" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:akhileshchitare04@gmail.com" class="social-icon" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="order-1 lg:order-2 flex justify-center reveal">
+                    <div class="hero-image-container">
+                        <img src="assets/images/AkhileshChitarePassportLinkedin.jpeg" 
+                             alt="Akhilesh Chitare" 
+                             class="w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full object-cover border-4 border-white/10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    About <span class="gradient-text">Me</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="glass-card p-8 md:p-12 reveal">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <div class="stat-item">
+                        <div class="stat-number">8.26</div>
+                        <div class="text-gray-400">CGPA</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2026</div>
+                        <div class="text-gray-400">Expected Graduation</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="text-gray-400">Projects Completed</div>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-white/10">
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        I'm a Computer Science Engineering student at <strong class="text-purple-400">G.H. Raisoni College of Engineering and Management</strong> with a passion for building efficient software solutions. I have a solid foundation in <strong>Java</strong>, <strong>Data Structures</strong>, and <strong>Algorithms</strong>, and I'm eager to apply my skills to real-world problems. I'm actively seeking <strong>internship</strong> and <strong>entry-level opportunities</strong> in software development where I can contribute and grow.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    My <span class="gradient-text">Skills</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+            
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Programming Languages -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400">
+                        <i class="fas fa-code mr-2"></i>Programming
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                
+                <!-- Web Technologies -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400">
+                        <i class="fas fa-globe mr-2"></i>Web Tech
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">React.js</span>
+                    </div>
+                </div>
+                
+                <!-- Databases -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400">
+                        <i class="fas fa-database mr-2"></i>Databases
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                </div>
+                
+                <!-- Core Concepts -->
+                <div class="glass-card p-6 reveal">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400">
+                        <i class="fas fa-microchip mr-2"></i>Core Concepts
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">DSA</span>
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">OS</span>
+                        <span class="skill-tag">CN</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Tools -->
+            <div class="mt-8 glass-card p-6 reveal">
+                <h3 class="text-xl font-semibold mb-4 text-purple-400">
+                    <i class="fas fa-tools mr-2"></i>Tools & Technologies
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">VS Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Featured <span class="gradient-text">Projects</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+            
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- CRM Project -->
+                <div class="project-card p-6 reveal">
+                    <div class="h-48 bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-2xl mb-6 flex items-center justify-center">
+                        <i class="fas fa-users text-6xl text-purple-400/50"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Customer Relationship Management (CRM) System</h3>
+                    <p class="text-gray-400 mb-4">A comprehensive CRM system with CRUD operations, search, filtering, and role-based access control for managing customer data efficiently.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            <i class="fab fa-github mr-1"></i>Code
+                        </a>
+                        <span class="text-gray-600">|</span>
+                        <span class="text-gray-500 text-sm flex items-center">
+                            <i class="fas fa-code-branch mr-1"></i>Main Project
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Bank Management -->
+                <div class="project-card p-6 reveal">
+                    <div class="h-48 bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-2xl mb-6 flex items-center justify-center">
+                        <i class="fas fa-university text-6xl text-blue-400/50"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Bank Management System</h3>
+                    <p class="text-gray-400 mb-4">Console-based application using JDBC for managing bank accounts, transactions, and customer information with secure database operations.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">JDBC</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            <i class="fab fa-github mr-1"></i>Code
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Food Delivery -->
+               <div class="project-card p-6 reveal">
+    <div class="h-48 bg-gradient-to-br from-orange-600/30 to-red-600/30 rounded-2xl mb-6 flex items-center justify-center">
+        <i class="fas fa-utensils text-6xl text-orange-400/50"></i>
+    </div>
+
+    <h3 class="text-2xl font-bold mb-3">
+        Bite Runner - Food Delivery Web Application
+    </h3>
+
+    <p class="text-gray-400 mb-4">
+        Frontend application for browsing restaurant menus, managing orders, and providing a seamless food ordering experience.
+    </p>
+
+    <div class="flex flex-wrap gap-2 mb-4">
+        <span class="skill-tag">React.js</span>
+        <span class="skill-tag">HTML/CSS</span>
+    </div>
+
+    <div class="flex gap-3">
+        <a 
+            href="https://github.com/Akhilesh9911/BiteRunner"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-purple-400 hover:text-purple-300 transition-colors"
+        >
+            <i class="fab fa-github mr-1"></i>Code
+        </a>
+    </div>
+</div>
+
+                
+                <!-- Disease Detection -->
+                <div class="project-card p-6 reveal">
+                    <div class="h-48 bg-gradient-to-br from-green-600/30 to-emerald-600/30 rounded-2xl mb-6 flex items-center justify-center">
+                        <i class="fas fa-leaf text-6xl text-green-400/50"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Soyabean Leaf Disease Detection System</h3>
+                    <p class="text-gray-400 mb-4">CNN-based image classification model for detecting and classifying leaf diseases in soyabean crops using deep learning techniques.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">CNN</span>
+                        <span class="skill-tag">Deep Learning</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                            <i class="fab fa-github mr-1"></i>Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Work <span class="gradient-text">Experience</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="glass-card p-8 reveal">
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-white mb-1">AI and Machine Learning Intern</h3>
+                        <p class="text-purple-400 font-medium mb-2">Edunet Foundation (AICTE & IBM SkillsBuild)</p>
+                        <p class="text-gray-400 mb-3">Internship</p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-purple-400 mt-1"></i>
+                                <span>Prepared and organized datasets for machine learning model training</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-purple-400 mt-1"></i>
+                                <span>Performed basic data analysis using Python</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-purple-400 mt-1"></i>
+                                <span>Implemented machine learning models as part of internship tasks</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="gradient-text">Education</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="glass-card p-8 reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-graduation-cap text-2xl text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-white mb-1">B.Tech in Computer Science and Engineering</h3>
+                            <p class="text-purple-400 font-medium mb-1">G.H. Raisoni College of Engineering and Management</p>
+                            <p class="text-gray-400 mb-2">2022 - 2026</p>
+                            <div class="flex items-center gap-4">
+                                <span class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm font-medium">
+                                    CGPA: 8.26
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Get In <span class="gradient-text">Touch</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+            
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="reveal">
+                    <h3 class="text-2xl font-bold mb-6">Let's Connect</h3>
+                    <p class="text-gray-400 mb-8">Feel free to reach out for collaborations, internships, or just to say hello!</p>
+                    
+                    <div class="space-y-4">
+                        <a href="mailto:akhileshchitare04@gmail.com" class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">Email</p>
+                                <p class="font-medium">akhileshchitare04@gmail.com</p>
+                            </div>
+                        </a>
+                        
+                        <a href="tel:+919881246251" class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">Phone</p>
+                                <p class="font-medium">+91 9881246251</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://linkedin.com/in/akhilesh00" target="_blank" class="contact-item">
+                            <i class="fab fa-linkedin-in"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">LinkedIn</p>
+                                <p class="font-medium">linkedin.com/in/akhilesh00</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://github.com/Akhilesh9911" target="_blank" class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <p class="text-gray-400 text-sm">GitHub</p>
+                                <p class="font-medium">github.com/Akhilesh9911</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-8 reveal">
+                    <h3 class="text-2xl font-bold mb-6">Send a Message</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <input type="text" placeholder="Your Name" 
+                                   class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500 transition-colors text-white placeholder-gray-500">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Your Email" 
+                                   class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500 transition-colors text-white placeholder-gray-500">
+                        </div>
+                        <div>
+                            <textarea placeholder="Your Message" rows="4" 
+                                      class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500 transition-colors text-white placeholder-gray-500 resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400">
+                    © 2024 Akhilesh Chitare. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://linkedin.com/in/akhilesh00" target="_blank" class="social-icon" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/Akhilesh9911" target="_blank" class="social-icon" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:akhileshchitare04@gmail.com" class="social-icon" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+   function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("hidden");
+}
+
+function closeMenu() {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.add("hidden");
+}
+// Close mobile menu on scroll
+window.addEventListener("scroll", () => {
+    const menu = document.getElementById("mobileMenu");
+    if (!menu.classList.contains("hidden")) {
+        menu.classList.add("hidden");
+    }
+});
+
+
+        // Scroll Reveal Animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize reveal on scroll
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+    </script>
+</body>
+</html>
